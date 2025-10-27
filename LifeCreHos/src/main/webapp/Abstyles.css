@@ -1,0 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f8ff; /* Light background for a clean look */
+}
+
+.hospital-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    background-color: #007bff; /* Blue color for trust */
+    color: white;
+    padding: 20px;
+}
+
+.logo {
+    width: 150px;
+    margin-top: 10px;
+}
+
+.lobby {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.lobby-description {
+    margin-bottom: 20px;
+}
+
+.staff-interaction {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.doctor-nurse {
+    text-align: center;
+}
+
+.staff-image {
+    width: 100px;
+    border-radius: 50%;
+}
+
+.plants {
+    display: flex;
+    justify-content: center;
+}
+
+.plant-image {
+    width: 50px;
+    margin: 0 10px;
+}

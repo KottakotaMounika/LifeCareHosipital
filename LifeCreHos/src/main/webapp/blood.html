@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blood Donation - Lifecare</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(145deg, #ffe6e6, #fff5f5);
+      color: #333;
+    }
+
+    section.hero {
+      background: linear-gradient(to right, #d80000, #ff416c);
+      color: white;
+      text-align: center;
+      padding: 70px 20px 100px;
+      border-bottom-left-radius: 60px;
+      border-bottom-right-radius: 60px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    .hero h2 {
+      font-size: 20px;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounceIn {
+      0%   { transform: scale(0.3); opacity: 0; }
+      50%  { transform: scale(1.1); opacity: 1; }
+      70%  { transform: scale(0.9); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .fade-in {
+      animation: fadeIn 1s ease-out forwards;
+    }
+
+    .fade-in-delay {
+      animation: fadeIn 1.4s ease-out forwards;
+      animation-delay: 0.4s;
+      opacity: 0;
+    }
+
+    .fade-in-delay2 {
+      animation: fadeIn 1.8s ease-out forwards;
+      animation-delay: 0.6s;
+      opacity: 0;
+    }
+
+    .bounce-in {
+      animation: bounceIn 1.6s ease-out;
+    }
+
+    .zoom-in {
+      animation: zoomIn 1.2s ease-out forwards;
+      animation-delay: 1s;
+      opacity: 0;
+    }
+
+    .highlight {
+      color: #fff2b2;
+      font-weight: bold;
+    }
+
+    .logo {
+      font-size: 60px;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .logo span.drop {
+      color: #ffcccb;
+      font-size: 70px;
+      font-weight: bold;
+      vertical-align: middle;
+    }
+
+    .subtitle {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .hero-description {
+      font-size: 16px;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      color: #f5f5f5;
+    }
+
+    .cta-button {
+      background-color: white;
+      color: #d80000;
+      font-weight: bold;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-size: 18px;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background-color: #f2f2f2;
+      transform: scale(1.05);
+    }
+
+    section.donation-section {
+      background: white;
+      margin: -60px auto 50px;
+      padding: 50px 30px;
+      max-width: 1100px;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .donation-section h1 {
+      text-align: center;
+      color: #d80000;
+      font-size: 32px;
+      margin-bottom: 40px;
+    }
+
+    .donation-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .left-section {
+      flex: 1;
+      text-align: center;
+    }
+
+    .left-section img {
+      width: 180px;
+      margin-bottom: 20px;
+    }
+
+    .donation-info h2 {
+      font-size: 20px;
+      color: #444;
+    }
+
+    .donation-info .one {
+      color: #000;
+    }
+
+    .donation-info .three {
+      color: #d80000;
+    }
+
+    .right-section {
+      flex: 2;
+      overflow-x: auto;
+    }
+
+    .table-container h3 {
+      background: #d80000;
+      color: white;
+      padding: 12px;
+      font-size: 20px;
+      border-radius: 10px 10px 0 0;
+      margin-bottom: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table th, table td {
+      padding: 14px;
+      border: 1px solid #eee;
+      text-align: center;
+    }
+
+    table th {
+      background: #f8f8f8;
+    }
+
+    table tr:hover {
+      background-color: #fff0f0;
+    }
+
+    .description-text p {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 16px;
+      color: #555;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .donate-action {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .donate-action button {
+      padding: 14px 32px;
+      font-size: 16px;
+      background: #d80000;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .donate-action button:hover {
+      background-color: #a00000;
+    }
+
+    @media(max-width: 768px) {
+      .donation-content {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <h2 class="fade-in">WELCOME TO</h2>
+
+    <h1 class="logo bounce-in">
+      The <span class="bold">Blo</span><span class="drop">🩸</span><span class="bold">dBank</span>
+    </h1>
+
+    <h3 class="subtitle fade-in-delay">
+      A financial services initiative that will <span class="highlight">save lives</span>
+    </h3>
+
+    <p class="hero-description fade-in-delay2">
+      We’re used to deposits and savings – but here, we deposit hope. The Blood Bank inspires
+      a nation-wide push to raise awareness and save lives through the power of donation.
+    </p>
+
+    <a href="#donation-section" class="cta-button zoom-in">
+      DONATE NOW <span class="warning-icon">⚠️</span>
+    </a>
+  </section>
+
+  <section class="donation-section" id="donation-section">
+    <h1>Learn About Blood Donation</h1>
+    <div class="donation-content">
+      <div class="left-section">
+        <img src="images/blood.webp" alt="Blood Bag Image" />
+        <div class="donation-info">
+          <h2><span class="one">One</span> Blood Donation can save up to <span class="three">Three</span> Lives</h2>
+        </div>
+      </div>
+
+      <div class="right-section">
+        <div class="table-container">
+          <h3>Compatible Blood Type Donors</h3>
+          <table>
+            <thead>
+              <tr><th>Blood Type</th><th>Donate Blood To</th><th>Receive Blood From</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>A+</td><td>A+, AB+</td><td>A+, A-, O+, O-</td></tr>
+              <tr><td>O+</td><td>O+, A+, B+, AB+</td><td>O+, O-</td></tr>
+              <tr><td>B+</td><td>B+, AB+</td><td>B+, B-, O+, O-</td></tr>
+              <tr><td>AB+</td><td>AB+</td><td>All Types</td></tr>
+              <tr><td>A-</td><td>A+, A-, AB+, AB-</td><td>A-, O-</td></tr>
+              <tr><td>O-</td><td>All Types</td><td>O-</td></tr>
+              <tr><td>B-</td><td>B+, B-, AB+, AB-</td><td>B-, O-</td></tr>
+              <tr><td>AB-</td><td>AB+, AB-</td><td>AB-, A-, B-, O-</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="description-text">
+      <p>Blood donation is a vital act of kindness and health awareness. After donating, your body begins replenishing lost blood within hours, stimulating the production of new cells and helping maintain good health. Your single donation could help multiple lives in emergency situations.</p>
+    </div>
+
+    <div class="donate-action">
+      <button onclick="donationAlert()">Donate Now</button>
+    </div>
+  </section>
+
+  <script>
+    function donationAlert() {
+      alert("Thank you for choosing to donate. You are saving lives!");
+    }
+  </script>
+</body>
+</html>

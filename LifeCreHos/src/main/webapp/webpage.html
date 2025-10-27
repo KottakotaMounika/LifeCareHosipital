@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hospital Page</title>
+  <link rel="stylesheet" href="webpage.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<!-- Header -->
+  <header class="navbar">
+    <div class="logo">
+      <img src="images/hospital.jpg" alt="Lifecare Hospital Logo"/>
+      <h1>Lifecare Hospital</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#" class="nav-btn">Home</a></li>
+        <li><a href="Aboutus.html"  class="nav-btn">AboutUs</a></li>
+        <li><a href="department.html"  class="nav-btn">Departments</a></li>
+		<li><a href="medicalshop.html" class="nav-btn">MedicalShop</a></li>
+        <li><a href="#"  class="nav-btn" onclick="openContact()" >Contact</a></li>
+        <li class="login"><a href="login.html">Login</a></li>
+       <li class="login"><a href="appointment.jsp">Appointment</a></li>
+       
+		
+
+	  </ul>
+    </nav>
+  </header>
+  <div id="contactPopup" class="popup">
+    <div class="popup-content">
+      <span class="close-btn" onclick="closeContact()">&times;</span>
+      <h2>Contact Us</h2>
+      <ul class="contact-list">
+        <li><strong>📞 Phone:</strong> +91 98765 43210</li>
+        <li><strong>✉️ Email:</strong> lifecarehospital@example.com</li>
+        <li><strong>📍 Address:</strong> 123, Main Road, Your City, India</li>
+        <li><strong>🕒 Working Hours:</strong> Mon - Sat, 9 AM to 8 PM</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Marquee -->
+  <div class="marquee">
+    <marquee>Welcome to Our Hospital | Quality Healthcare Services | 24/7 Emergency Support</marquee>
+  </div>
+
+  <!-- Video Section -->
+<!-- Hero Section -->
+<div class="hero-container">
+  <!-- Left Blue Curved Area -->
+  <div class="hero-content">
+    <div class="text-box">
+      <h1>A Legacy Of Healing,<br>A Future Of Care</h1>
+      <p class="tagline">Committed to excellence in healthcare and compassion.</p>
+      <div class="button-group">
+        <a href="blood.html" class="btn primary">BloodBank</a>
+        <a href="#" class="btn secondary">Learn More</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Video Area -->
+  <div class="hero-video">
+    <video autoplay muted playsinline>
+      <source src="images/DOCvedio.mp4" type="video/mp4" />
+    </video>
+  </div>
+</div>
+
+<!-- CSS -->
+<style>
+/* Hero Container */
+.hero-container {
+  display: flex;
+  align-items: center;
+  height: 80vh;
+  overflow: hidden;
+  position: relative;
+  margin: 0;
+  background-color: #f5f9ff;
+}
+
+/* Left Curved Blue Side */
+.hero-content {
+  background: linear-gradient(135deg, #3fc4f6 0%, #33bcd6 100%);
+  width: 30%; /* 👈 Increased to cover gap */
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  clip-path: ellipse(70% 100% at 25% 50%); /* 👈 Slightly adjusted */
+  padding-right: 4%;
+  z-index: 2;
+  position: absolute; /* 👈 Key change */
+  left: 0;
+  top: 0;
+}
+
+/* Text Box */
+.text-box {
+  color: #fff;
+  max-width: 420px;
+  padding-left: 30px;
+  opacity: 0;
+  transform: translateY(40px);
+  animation: popUp 1s ease-out forwards;
+  animation-delay: 0.4s;
+}
+
+/* Pop-up Animation */
+@keyframes popUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.text-box h1 {
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.text-box .tagline {
+  font-size: 1.05rem;
+  font-weight: 400;
+  margin-bottom: 30px;
+  color: #e9f8ff;
+}
+
+/* Buttons */
+.button-group {
+  display: flex;
+  gap: 15px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.btn.primary {
+  background-color: #ff4f5a;
+  color: #fff;
+}
+
+.btn.primary:hover {
+  background-color: #e43d4d;
+  transform: translateY(-2px);
+}
+
+.btn.secondary {
+  background-color: #2ecc71;
+  color: #fff;
+}
+
+.btn.secondary:hover {
+  background-color: #27ae60;
+  transform: translateY(-2px);
+}
+
+/* Right Video Side */
+.hero-video {
+  width: 100%; /* 👈 Full width */
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  z-index: 1; /* 👈 Behind hero-content */
+  margin-left: 0;
+}
+
+.hero-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.95);
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .hero-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .hero-content {
+    position: static; /* 👈 Reset for mobile */
+    width: 100%;
+    clip-path: none;
+    padding: 60px 30px;
+    justify-content: center;
+  }
+
+  .hero-video {
+    width: 100%;
+    height: 300px;
+    margin-left: 0;
+  }
+
+  .text-box h1 {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .text-box .tagline,
+  .button-group {
+    text-align: center;
+    justify-content: center;
+  }
+}
+</style>
+
+
+
+
+
+   <!-- Video section ended -->
+ <!-- Consultation Section -->
+  <section class="consultation-section">
+    <div class="consultation-container">
+      <div class="image-container">
+        <img src="images/doc.webp" alt="Doctor with Patient" />
+      </div>
+      <div class="text-container">
+        <h1>Request a <span>consultation</span></h1>
+        <p>Lifecare Center provides innovative, personalized medical care to patients from around the world.</p>
+        <p>We welcome all cases, including the rarest and the most challenging.</p>
+        <strong>Request a consultation and a Lifecare hospital Manager will contact you shortly:</strong>
+        <div class="buttons">
+          <a href="#" class="btn new-patient">New Patient</a>
+          <a href="records.html"  class="btn returning-patient" >Patient records</a>
+        </div>
+      </div>
+    </div>
+  </section>
+<!-- Treatment Section -->
+  <div class="treatment-section">
+    <h1>Stay Ahead with the Best Treatments!</h1>
+    <div class="treatment-grid">
+      <div class="treatment-card"><img src="images/telemedicine.png" alt="Telemedicine" /><p>Telemedicine</p></div>
+      <div class="treatment-card"><img src="images/vitamin.png" alt="Vitamin Drips" /><p>Vitamin Drips</p></div>
+      <div class="treatment-card"><img src="images/tele.png" alt="Telemedicine" /><p>Telemedicine</p></div>
+      <div class="treatment-card"><img src="images/cancer.png" alt="Cancer Screening" /><p>Cancer Screening</p></div>
+    </div>
+  </div>
+<!-- Expert Section -->
+  <section class="expert-section">
+    <h1>Meet Our Expert</h1>
+    <div class="scroll-container">
+      <button class="scroll-btn left-btn" onclick="scrollLeftBtn()">❮</button>
+      <div class="expert-container" id="expertContainer">
+        <div class="expert-card"><img src="images/profile1.jpg" alt="Dr. Jhon Doe"/><p>Dr. Jhon Doe</p></div>
+        <div class="expert-card"><img src="images/profile2.jpg" alt="Dr. Arjun Verma"/><p>Dr. Arjun Verma</p></div>
+        <div class="expert-card"><img src="images/profile3.jpg" alt="Dr. Aisha Reddy"/><p>Dr. Aisha Reddy</p></div>
+        <div class="expert-card"><img src="images/profile4.jpg" alt="Dr. Ravi Kiran"/><p>Dr. Ravi Kiran</p></div>
+        <div class="expert-card"><img src="images/profile5.jpg" alt="Dr. Kunal Deshmukh"/><p>Dr. Kunal Deshmukh</p></div>
+        <div class="expert-card"><img src="images/profile6.jpg" alt="Dr. Meera Sharma"/><p>Dr. Meera Sharma</p></div>
+        <div class="expert-card"><img src="images/profile7.jpg" alt="Dr. Sneha Kapoor"/><p>Dr. Sneha Kapoor</p></div>
+        <div class="expert-card"><img src="images/profile8.jpg" alt="Dr. Vikram Rao"/><p>Dr. Vikram Rao</p></div>
+      </div>
+      <button class="scroll-btn right-btn" onclick="scrollRightBtn()">❯</button>
+    </div>
+  </section>
+	
+	<h1 align=center><span>Our Customers</span> Reviews</h1><br><br><br>
+	<section class="review-section">
+	<div class="review-boxes">
+	<!-- Review Card 1 -->
+      <div class="review-card">
+        <div class="img-container">
+          <img src="images/review1.jpg" alt="">
+        </div>
+        <h2>Aranv Singh</h2>
+        <div class="stars">★★★★☆</div>
+        <p>Exceptional service! The doctors were professional and truly cared.</p>
+      </div>
+
+      <!-- Review Card 2 -->
+      <div class="review-card">
+        <div class="img-container">
+          <img src="images/review2.avif" alt="John Deo">
+        </div>
+        <h2>Jane Smith</h2>
+        <div class="stars">★★★★★</div>
+        <p>Booking an appointment was easy and helpful!</p>
+      </div>
+
+      <!-- Review Card 3 -->
+      <div class="review-card">
+        <div class="img-container">
+          <img src="images/review3.avif" alt="John Deo">
+        </div>
+        <h2>David</h2>
+        <div class="stars">★★★★☆</div>
+        <p>Highly recommend! The treatment was very effective.</p>
+      </div>
+    </div>
+
+
+    <div class="review-container" id="reviewContainer">
+      <!-- Reviews will be added here dynamically -->
+    </div>
+
+    <button id="openReviewBtn" class="review-btn">Write a Review</button>
+ 
+  <!-- Review Form Popup -->
+  <div id="reviewPopup" class="popup">
+    <div class="popup-content">
+      <span class="close-btn" id="closePopup">&times;</span>
+      <h2>Write a Review</h2>
+      <form id="reviewForm">
+        <input type="text" id="name" placeholder="Your Name" required />
+        <textarea id="comment" placeholder="Your Review" required></textarea>
+        <select id="rating" required>
+          <option value="">Select Rating</option>
+          <option value="1">⭐</option>
+          <option value="2">⭐⭐</option>
+          <option value="3">⭐⭐⭐</option>
+          <option value="4">⭐⭐⭐⭐</option>
+          <option value="5">⭐⭐⭐⭐⭐</option>
+        </select>
+        <button type="submit">Submit</button>
+      </form>
+      <div id="successMsg" class="success-msg">Review submitted successfully!</div>
+    </div>
+  </div>
+</section>
+
+  
+  <!-- Footer -->
+  <!-- Footer -->
+<footer class="footer-container">
+  <div class="footer-content">
+    <div class="footer-section about">
+      <h3>Lifecare Hospital</h3>
+      <p>Delivering compassionate, cutting-edge healthcare since 1990. We're here 24/7 for you and your family.</p>
+    </div>
+
+    <div class="footer-section contact">
+      <h4>Contact Us</h4>
+      <p>📍 123 Wellness Street, Healing City, India</p>
+      <p>📞 +91 98765 43210</p>
+      <p>📧 contact@lifecarehospital.in</p>
+    </div>
+
+    <div class="footer-section links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="Aboutus.html" >About Us</a></li>
+        <li><a href="department.html" >Departments</a></li>
+        <li><a href="medicalshop.html">Medical Shop</a></li>
+        <li><a href="appointment.html" >Appointment</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section social">
+      <h4>Follow Us</h4>
+      <div class="social-icons">
+		<a href="https://facebook.com"  class="icon facebook"><i class="fab fa-facebook-f"></i></a>
+		<a href="https://instagram.com"  class="icon instagram"><i class="fab fa-instagram"></i></a>
+		<a href="https://twitter.com"  class="icon twitter"><i class="fab fa-twitter"></i></a>
+		<a href="https://linkedin.com" class="icon linkedin"><i class="fab fa-linkedin-in"></i></a>
+</div>
+
+
+
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 Lifecare Hospital. All Rights Reserved.</p>
+  </div>
+</footer>
+
+
+  <!-- JS -->
+  <script>
+  
+
+    function scrollLeftBtn() {
+      const container = document.getElementById('expertContainer');
+      container.scrollBy({ left: -1080, behavior: 'smooth' });
+    }
+    function scrollRightBtn() {
+      const container = document.getElementById('expertContainer');
+      container.scrollBy({ left: 1080, behavior: 'smooth' });
+    }
+
+   
+const openBtn = document.getElementById("openReviewBtn");
+const popup = document.getElementById("reviewPopup");
+const closeBtn = document.getElementById("closePopup");
+const reviewForm = document.getElementById("reviewForm");
+const reviewContainer = document.getElementById("reviewContainer");
+const successMsg = document.getElementById("successMsg");
+
+// Show popup
+openBtn.addEventListener("click", () => {
+  popup.style.display = "block";
+  successMsg.style.display = "none";
+});
+
+// Close popup
+closeBtn.addEventListener("click", () => {
+  popup.style.display = "none";
+  reviewForm.reset();
+});
+
+// Submit review
+reviewForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const comment = document.getElementById("comment").value;
+  const rating = document.getElementById("rating").value;
+
+  // Create stars
+  let stars = "";
+  for (let i = 0; i < rating; i++) {
+    stars += "⭐";
+  }
+
+  // Create review card
+  const card = document.createElement("div");
+  card.className = "review-card";
+  card.innerHTML = `
+    <h3>${name}</h3>
+    <div class="stars">${stars}</div>
+    <p>${comment}</p>
+  `;
+
+  reviewContainer.appendChild(card);
+
+  // Show success message
+  successMsg.style.display = "block";
+
+  // Reset form
+  reviewForm.reset();
+
+  // Close popup after short delay
+  setTimeout(() => {
+    popup.style.display = "none";
+    successMsg.style.display = "none";
+  }, 1500);
+});
+
+function openContact() {
+      document.getElementById("contactPopup").style.display = "block";
+    }
+
+    function closeContact() {
+      document.getElementById("contactPopup").style.display = "none";
+    }
+
+    // Close popup when clicking outside of the box
+    window.onclick = function(event) {
+      const popup = document.getElementById("contactPopup");
+      if (event.target == popup) {
+        popup.style.display = "none";
+      }
+    }
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Medical Shop - Lifecare Hospital</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; background-color: #f5f5f5; }
+    h1 { text-align: center; color: #2a7f62; margin-bottom: 10px; }
+    .shop-container { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+    .medicine-card { background-color: #fff; width: 200px; padding: 15px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); text-align: center; transition: transform 0.2s ease; }
+    .medicine-card:hover { transform: scale(1.03); }
+    .medicine-card img { width: 100px; height: 100px; object-fit: contain; margin-bottom: 10px; }
+    .medicine-card button { background-color: #2a7f62; color: white; padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; margin-top: 8px; }
+    .cart { margin-top: 40px; background-color: #fff; padding: 20px; border-radius: 12px; max-width: 500px; margin-left: auto; margin-right: auto; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+    .cart h2 { display: flex; justify-content: space-between; align-items: center; margin-top: 0; color: #333; }
+    .cart-items { list-style: none; padding-left: 0; margin: 0; }
+    .cart-items li { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #eee; }
+    .cart-items li div { display: flex; align-items: center; gap: 10px; }
+    .cart-items button { padding: 4px 8px; border: none; background-color: #2a7f62; color: white; border-radius: 4px; cursor: pointer; }
+    .total { font-weight: bold; font-size: 18px; margin-top: 10px; text-align: right; }
+    .pay-button { background-color: #e91e63; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; display: block; margin: 20px auto 0; }
+    #searchBox { display: block; margin: 10px auto 20px; padding: 10px; width: 300px; border: 1px solid #ccc; border-radius: 6px; }
+    .toggle-btn { background-color: #2a7f62; color: white; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; }
+    body.light-blue-mode { background-color: #e6f7ff; color: #333; }
+    body.light-blue-mode .medicine-card, body.light-blue-mode .cart { background-color:#9bd2f3; box-shadow: 0 2px 8px rgba(0,123,255,0.1); }
+    body.light-blue-mode .medicine-card button, body.light-blue-mode .cart-items button, body.light-blue-mode .pay-button, body.light-blue-mode .toggle-btn { background-color: #3fdbdd; color: white; }
+
+    /* Modal CSS */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); justify-content: center; align-items: center; }
+    .modal-content { background: white; padding: 20px 30px; border-radius: 10px; text-align: center; max-width: 400px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+    .modal-content button { background-color: #2a7f62; color: white; border: none; padding: 10px 20px; margin-top: 20px; border-radius: 6px; cursor: pointer; }
+  </style>
+</head>
+<body>
+<h1>💊 Lifecare Medical Shop 🩺</h1>
+<div style="text-align:center; margin-bottom:10px;">
+  <button id="modeToggle" class="toggle-btn">🌊 Light Blue Mode</button>
+</div>
+
+<input type="text" id="searchBox" placeholder="Search medicines...">
+<div class="shop-container" id="shop"></div>
+
+<div class="cart" id="cart">
+  <h2>Your Cart <span id="cartCount">(0)</span></h2>
+  <ul class="cart-items" id="cartItems"></ul>
+  <div class="total" id="totalPrice">Total: ₹0</div>
+  <button class="pay-button" onclick="placeOrder()">Proceed to Pay</button>
+</div>
+
+<!-- Payment Modal -->
+<div class="modal" id="paymentModal">
+  <div class="modal-content">
+    <h2>Payment Successful</h2>
+    <p>Thank you for your purchase!</p>
+    <button onclick="closeModal()">Go to My Orders</button>
+  </div>
+</div>
+
+<script>
+const shopContainer = document.getElementById('shop');
+const cartItemsList = document.getElementById('cartItems');
+const totalPriceEl = document.getElementById('totalPrice');
+const cartCount = document.getElementById('cartCount');
+const searchBox = document.getElementById('searchBox');
+const modeToggle = document.getElementById('modeToggle');
+const modal = document.getElementById('paymentModal');
+let cart = [];
+
+const medicines = [
+  { name: "Paracetamol", price: 20, image: "images/paracetemol.jpg" },
+  { name: "Cough Syrup", price: 65, image: "images/syrup.webp" },
+  { name: "Vitamin C Tablets", price: 150, image: "images/Vitamin C.webp" },
+  { name: "Pain Relief Gel", price: 120, image: "images/Pain Relief Gel.webp" },
+  { name: "Antacid", price: 35, image: "images/Antacid.webp" },
+  { name: "Ibuprofen", price: 45, image: "images/Ibuprofen.webp" },
+  { name: "Amoxicillin", price: 85, image: "images/Amoxicillin.webp" },
+  { name: "Allergy Relief (Cetirizine)", price: 30, image: "images/Allergy Relief.webp" },
+  { name: "Multivitamins", price: 110, image: "images/Multivitamins.webp" },
+  { name: "ORS Sachet", price: 10, image: "images/ORS Sachet.webp" },
+  { name: "Nasal Spray", price: 95, image: "images/Nasal Spray.webp" },
+  { name: "Digestive Enzyme Syrup", price: 60, image: "images/Digestive Enzyme Syrup.webp" },
+  { name: "Burn Cream", price: 55, image: "images/Burn Cream.webp" },
+  { name: "Thermometer", price: 200, image: "images/Thermometer.webp" },
+  { name: "Bandages Pack", price: 25, image: "images/Bandages Pack.webp" }
+];
+
+// Render medicines
+function renderMedicines(filter=''){
+  shopContainer.innerHTML='';
+  medicines.filter(m=>m.name.toLowerCase().includes(filter.toLowerCase())).forEach((med,i)=>{
+    const card = document.createElement('div');
+    card.className='medicine-card';
+    card.innerHTML=`
+      <img src="${med.image}" alt="${med.name}">
+      <h3>${med.name}</h3>
+      <p>₹${med.price}</p>
+      <button onclick="addToCart(${i})">Add to Cart</button>
+    `;
+    shopContainer.appendChild(card);
+  });
+}
+
+// Search functionality
+searchBox.addEventListener('input',()=> renderMedicines(searchBox.value));
+
+// Add to cart
+function addToCart(index){
+  const item = medicines[index];
+  const existing = cart.find(c=>c.name===item.name);
+  if(existing) existing.qty++;
+  else cart.push({...item, qty:1});
+  updateCart();
+}
+
+// Update cart display
+function updateCart(){
+  cartItemsList.innerHTML='';
+  let total=0, count=0;
+  cart.forEach((item,i)=>{
+    const li=document.createElement('li');
+    li.innerHTML=`
+      ${item.name} x ${item.qty}
+      <div>
+        <button onclick="changeQty(${i},-1)">−</button>
+        <button onclick="changeQty(${i},1)">+</button>
+        <span>₹${item.qty*item.price}</span>
+      </div>
+    `;
+    cartItemsList.appendChild(li);
+    total += item.qty*item.price;
+    count += item.qty;
+  });
+  totalPriceEl.textContent=`Total: ₹${total}`;
+  cartCount.textContent=`(${count})`;
+}
+
+// Change quantity
+function changeQty(index,delta){
+  cart[index].qty += delta;
+  if(cart[index].qty<=0) cart.splice(index,1);
+  updateCart();
+}
+
+// Mode toggle
+modeToggle.addEventListener('click',()=>{
+  document.body.classList.toggle('light-blue-mode');
+  modeToggle.textContent = document.body.classList.contains('light-blue-mode') ? '🌞 White Mode':'🌊 Light Blue Mode';
+});
+
+// Place order
+function placeOrder(){
+  if(cart.length===0){ alert("Cart is empty!"); return; }
+
+  const medicineNames = cart.map(c=>c.name).join(",");
+  const quantities = cart.map(c=>c.qty).join(",");
+  const prices = cart.map(c=>c.price).join(",");
+
+  fetch('order',{
+    method:'POST',
+    headers:{'Content-Type':'application/x-www-form-urlencoded'},
+    body:`medicineNames=${encodeURIComponent(medicineNames)}&quantities=${encodeURIComponent(quantities)}&prices=${encodeURIComponent(prices)}`
+  })
+  .then(res=>res.text())
+  .then(data=>{
+    if(data==="success"){
+      modal.style.display='flex'; // show modal
+      cart=[]; updateCart();
+    } else {
+      alert("Error placing order. Try again.");
+    }
+  }).catch(err=>{
+    console.error(err);
+    alert("Server connection error.");
+  });
+}
+
+// Close modal & redirect
+function closeModal(){
+  modal.style.display='none';
+  window.location.href='UserHome.jsp';
+}
+
+renderMedicines();
+</script>
+</body>
+</html>
