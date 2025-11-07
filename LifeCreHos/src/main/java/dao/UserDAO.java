@@ -29,7 +29,7 @@ public class UserDAO {
 
     // Validate login
     public User validateUser(String username, String password, String role) {
-        String sql = "SELECT * FROM users WHERE username=? AND password=? AND role=?";
+        String sql = "SELECT * FROM users WHERE username=? AND password=? AND LOWER(role)=LOWER(?)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 

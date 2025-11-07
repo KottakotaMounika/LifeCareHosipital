@@ -8,7 +8,7 @@
     }
 
     OrderDAO dao = new OrderDAO();
-    List<Order> orders = dao.getOrdersByUser(user.getUsername());
+    List<Order> orders = dao. getOrdersByUser(user.getUsername());
 %>
 <!DOCTYPE html>
 <html>

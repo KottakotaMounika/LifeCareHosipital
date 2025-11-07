@@ -7,7 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 import dao.AdminDAO;
+import dao.AppointmentDAO;
 import model.Appointment;
+import model.User;
 
 @WebServlet("/AdminController")
 public class AdminController extends HttpServlet {
@@ -16,35 +18,41 @@ public class AdminController extends HttpServlet {
             throws ServletException, IOException {
 
         String action = request.getParameter("action");
-        AdminDAO dao = new AdminDAO();
+        AdminDAO adminDAO = new AdminDAO();
 
         try {
-            switch(action) {
+            switch (action) {
 
-                // 1️⃣ Admin login
+                // ✅ 1. Admin login
                 case "login":
                     String username = request.getParameter("username");
                     String password = request.getParameter("password");
-                    boolean valid = dao.checkLogin(username, password);
+                    boolean valid = adminDAO.checkLogin(username, password);
 
-                    if(valid) {
+                    if (valid) {
                         HttpSession session = request.getSession();
-                        session.setAttribute("adminUser", username);
-                        response.sendRedirect("admin_dashboard.jsp");
+                        // store username properly for JSP
+                        User adminUser = new User();
+                        adminUser.setUsername(username);
+                        adminUser.setRole("admin");
+                        session.setAttribute("currentUser", adminUser);
+
+                        response.sendRedirect("adminDashboard");
                     } else {
                         request.setAttribute("errorMsg", "Invalid admin username or password!");
-                        request.getRequestDispatcher("admin_login.jsp").forward(request, response);
+                        request.getRequestDispatcher("login.html").forward(request, response);
                     }
                     break;
 
-                // 2️⃣ Delete patient
+                // ✅ 2. Delete appointment
                 case "delete":
                     int appointmentId = Integer.parseInt(request.getParameter("appointmentId"));
-                    dao.deletePatient(appointmentId);
-                    response.sendRedirect("admin_dashboard.jsp");
+                    AppointmentDAO deleteDAO = new AppointmentDAO();
+                    deleteDAO.deleteAppointment(appointmentId);
+                    response.sendRedirect("adminDashboard");
                     break;
 
-                // 3️⃣ Add patient
+                // ✅ 3. Add appointment
                 case "add":
                     String department = request.getParameter("department");
                     String patientName = request.getParameter("patient_name");
@@ -53,27 +61,60 @@ public class AdminController extends HttpServlet {
                     Date appointmentDate = Date.valueOf(request.getParameter("appointment_date"));
                     int doctorId = Integer.parseInt(request.getParameter("doctor_id"));
 
-                    Appointment appt = new Appointment();
-                    appt.setDepartment(department);
-                    appt.setPatientName(patientName);
-                    appt.setEmail(email);
-                    appt.setMobile(mobile);
-                    appt.setAppointmentDate(appointmentDate);
-                    appt.setDoctorId(doctorId);
+                    Appointment newAppt = new Appointment();
+                    newAppt.setDepartment(department);
+                    newAppt.setPatientName(patientName);
+                    newAppt.setEmail(email);
+                    newAppt.setMobile(mobile);
+                    newAppt.setAppointmentDate(appointmentDate);
+                    newAppt.setDoctorId(doctorId);
 
-                    dao.addPatient(appt);
-                    response.sendRedirect("admin_dashboard.jsp");
+                    AppointmentDAO addDAO = new AppointmentDAO();
+                    addDAO.insertAppointment(newAppt);
+                    response.sendRedirect("adminDashboard");
+                    break;
+
+                // ✅ 4. Update appointment
+                case "updateAppointment":
+                    HttpSession sess = request.getSession(false);
+                    if (sess == null || sess.getAttribute("currentUser") == null) {
+                        response.sendRedirect("login.html");
+                        return;
+                    }
+
+                    int id = Integer.parseInt(request.getParameter("appointmentId"));
+                    String dept = request.getParameter("department");
+                    String patient = request.getParameter("patientName");
+                    String mail = request.getParameter("email");
+                    String phone = request.getParameter("mobile");
+                    Date date = Date.valueOf(request.getParameter("appointmentDate"));
+
+                    Appointment updated = new Appointment();
+                    updated.setAppointmentId(id);
+                    updated.setDepartment(dept);
+                    updated.setPatientName(patient);
+                    updated.setEmail(mail);
+                    updated.setMobile(phone);
+                    updated.setAppointmentDate(date);
+
+                    AppointmentDAO appDAO = new AppointmentDAO();
+                    boolean success = appDAO.updateAppointment(updated);
+
+                    if (success)
+                        response.sendRedirect("adminDashboard");
+                    else
+                        response.getWriter().println("❌ Update failed!");
                     break;
 
                 default:
-                    response.sendRedirect("admin_login.jsp");
+                    response.sendRedirect("login.html");
                     break;
             }
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("errorMsg", "Internal server error!");
-            request.getRequestDispatcher("admin_login.jsp").forward(request, response);
+            request.getRequestDispatcher("login.html").forward(request, response);
         }
     }
 
@@ -81,10 +122,11 @@ public class AdminController extends HttpServlet {
             throws ServletException, IOException {
 
         String action = request.getParameter("action");
-        if("logout".equals(action)) {
+        if ("logout".equals(action)) {
             HttpSession session = request.getSession(false);
-            if(session != null) session.invalidate();
-            response.sendRedirect("admin_login.jsp");
+            if (session != null)
+                session.invalidate();
+            response.sendRedirect("login.html");
         } else {
             response.getWriter().println("AdminController is working!");
         }

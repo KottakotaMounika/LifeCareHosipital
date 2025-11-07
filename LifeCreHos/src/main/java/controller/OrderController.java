@@ -50,4 +50,27 @@ public class OrderController extends HttpServlet {
             response.getWriter().write("error");
         }
     }
+    
+    // For deleting orders (GET request)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String action = request.getParameter("action");
+        if ("delete".equals(action)) {
+            int orderId = Integer.parseInt(request.getParameter("orderId"));
+
+            try (Connection conn = DBConnection.getConnection()) {
+                String sql = "DELETE FROM user_orders WHERE order_id = ?";
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setInt(1, orderId);
+                    ps.executeUpdate();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // Redirect back to user home page
+            response.sendRedirect("UserHome.jsp");
+        }
+    }
 }

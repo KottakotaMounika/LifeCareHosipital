@@ -11,6 +11,7 @@ public class Appointment {
     private Date appointmentDate;
     private int doctorId;
     private String doctorName;
+    private int userId;
 
     public Appointment() {}
     public Appointment(String department, String patientName, String email, String mobile, Date appointmentDate) {
@@ -45,4 +46,9 @@ public class Appointment {
 
     public String getDoctorName() { return doctorName; }
     public void setDoctorName(String doctorName) { this.doctorName = doctorName; }
+
+    public int getUserId() { return userId; }
+    public void setUserId(int userId) { this.userId = userId; }
+
+    
 }

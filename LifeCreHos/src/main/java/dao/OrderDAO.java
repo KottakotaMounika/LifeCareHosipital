@@ -29,30 +29,28 @@ public class OrderDAO {
     }
 
     // Get all orders of a user
-    public List<Order> getOrdersByUser(int userId) {
-        List<Order> list = new ArrayList<>();
-        String sql = "SELECT * FROM user_orders WHERE user_id=?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+    public List<Order> getOrdersByUser(int userId) { 
+    	List<Order> list = new ArrayList<>(); 
+    	String sql = "SELECT * FROM user_orders WHERE user_id=?"; 
+    	try (Connection conn = DBConnection.getConnection(); 
+    			PreparedStatement ps = conn.prepareStatement(sql))
+    	{ 
+    		ps.setInt(1, userId);
+    	ResultSet rs = ps.executeQuery(); 
+    	while (rs.next()) { 
+    		Order order = new Order(); 
+    		order.setOrderId(rs.getInt("order_id"));
+    		order.setUserId(rs.getInt("user_id"));
+    		order.setMedicineName(rs.getString("medicine_name"));
+    		order.setQuantity(rs.getInt("quantity"));
+    		order.setPrice(rs.getDouble("price"));
+    		order.setOrderDate(rs.getDate("order_date")); 
+    		order.setStatus(rs.getString("status")); list.add(order);
+    		}
+    	} catch (SQLException e) {
+    		e.printStackTrace(); 
+    		} 
+    	return list;
+    	}
 
-            ps.setInt(1, userId);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                Order order = new Order();
-                order.setOrderId(rs.getInt("order_id"));
-                order.setUserId(rs.getInt("user_id"));
-                order.setMedicineName(rs.getString("medicine_name"));
-                order.setQuantity(rs.getInt("quantity"));
-                order.setPrice(rs.getDouble("price"));
-                order.setOrderDate(rs.getDate("order_date"));
-                order.setStatus(rs.getString("status"));
-                list.add(order);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
 }
