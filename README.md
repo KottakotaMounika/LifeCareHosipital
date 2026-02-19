@@ -96,4 +96,4 @@ src/
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/KottakotaMounika/LifeCareHospital.git
+git clone https://github.com/KottakotaMounika/LifeCareHosipital.git
