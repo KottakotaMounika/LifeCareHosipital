@@ -74,21 +74,12 @@ src/
 ---
 
 ## 📸 Application Screenshots
-
-### 🏠 Home Page
-![Home Page](screenshots/home.png)
-
-### 🔐 Login Page
-![Login Page](screenshots/login.png)
-
-### 📊 Admin Dashboard
-![Admin Dashboard](screenshots/admin-dashboard.png)
-
-### 📅 Appointment Booking
-![Appointment Page](screenshots/appointment.png)
-
-### 👨‍⚕️ Doctor Management
-![Doctors Page](screenshots/doctors.png)
+Below are some screenshots of the application.  
+All additional screenshots are available in the `Screenshots` folder
+![Home Page](Screenshots/home1.png)
+![Login Page](Screenshots/Login.png)
+![User Dashboard](Screenshots/user_dashboard.png)
+...
 
 ---
 
