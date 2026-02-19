@@ -12,7 +12,7 @@ public class DBConnection {
                 "jdbc:oracle:thin:@localhost:1521:XE", "system", "mouni");
         } catch(Exception e) {
             e.printStackTrace();
-        }
+        } 
         return conn;
     }
 }
