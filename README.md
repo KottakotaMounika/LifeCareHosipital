@@ -56,4 +56,44 @@ This project is built using Java Servlets, JSP, MySQL, HTML, CSS, and deployed u
 ---
 
 ## 📂 Project Structure
+src/
+└── main/
+├── java/
+│ ├── controller/
+│ ├── dao/
+│ ├── model/
+│ └── util/
+└── webapp/
+├── images/
+├── META-INF/
+├── WEB-INF/
+├── *.jsp
+├── *.html
+└── *.css
 
+---
+
+## 📸 Application Screenshots
+
+### 🏠 Home Page
+![Home Page](screenshots/home.png)
+
+### 🔐 Login Page
+![Login Page](screenshots/login.png)
+
+### 📊 Admin Dashboard
+![Admin Dashboard](screenshots/admin-dashboard.png)
+
+### 📅 Appointment Booking
+![Appointment Page](screenshots/appointment.png)
+
+### 👨‍⚕️ Doctor Management
+![Doctors Page](screenshots/doctors.png)
+
+---
+
+## ⚙ How to Run the Project
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/KottakotaMounika/LifeCareHospital.git
