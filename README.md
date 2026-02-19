@@ -77,8 +77,10 @@ src/
 Below are some screenshots of the application.  
 All additional screenshots are available in the `Screenshots` folder
 ![Home Page](Screenshots/home1.png)
-![Login Page](Screenshots/Login.png)
+![Admin Dashboard](Screenshots/admin_dashboard.png)
 ![User Dashboard](Screenshots/user_dashboard.png)
+![Appointment Page](Screenshots/appointment.png)
+![Login Page](Screenshots/Login.png)
 ...
 
 ---
